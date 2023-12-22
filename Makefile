@@ -6,9 +6,10 @@ LIB_PATH :=		libft/
 OBJ_PATH :=		.obj/
 
 CC :=			cc
-CFLAGS :=		-g -Wall -Wextra -Werror
+CFLAGS :=		-g
 IFLAGS :=		-I $(INC_PATH) -I $(LIB_PATH)
 LFLAGS :=		-lft -L $(LIB_PATH)
+MLXFLAGS :=		/Users/madvil2/Projects/so_long/mlx/build/libmlx42.a -Iinclude -lglfw
 
 HFILES :=		so_long
 FILES :=		utils\
@@ -17,14 +18,12 @@ LIB :=			$(LIB_PATH)libft.a
 
 HDRS :=			$(addprefix $(INC_PATH), $(addsuffix .h, $(HFILES)))
 SRCS :=			$(addprefix $(SRC_PATH), $(addsuffix .c, $(FILES)))
-LSRCS :=		$(addsuffix .c, $(LFILES))
 OBJS :=			$(addprefix $(OBJ_PATH), $(SRCS:%.c=%.o))
-LOBJS :=		$(addprefix $(LIB_PATH), $(LSRCS:%.c=%.o))
 
 all: $(NAME)
 
 $(NAME): $(LIB) $(OBJ_PATH) $(OBJS)
-	$(CC) $(CFLAGS) $(IFLAGS) $(LFLAGS) $(OBJS) -o $(NAME)
+	$(CC) $(CFLAGS) $(IFLAGS) $(LFLAGS) $(MLXFLAGS) $(OBJS) -o $(NAME)
 $(LIB):
 	$(MAKE) -C $(dir $@) $(notdir $@)
 
@@ -40,7 +39,7 @@ fclean: mfclean
 re: fclean all
 
 mclean:
-	rm -f $(OBJS) $(DEPS)
+	rm -f $(OBJS)
 mfclean:
 	rm -f $(NAME)
 	rm -rf $(OBJ_PATH)
