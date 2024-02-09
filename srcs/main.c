@@ -6,56 +6,34 @@
 /*   By: kokaimov <kokaimov@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 21:00:08 by kokaimov          #+#    #+#             */
-/*   Updated: 2023/12/19 02:11:53 by kokaimov         ###   ########.fr       */
+/*   Updated: 2024/02/09 21:08:27 by kokaimov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-void	ft_hook(void* param)
+int	ft_on_exit(t_game *game)
 {
-	mlx_t* mlx = param;
-
-	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
-		mlx_close_window(mlx);
+	mlx_destroy_window(game->mlx, game->window);
+	mlx_destroy_display(game->mlx);
+	free(game->mlx);
+	exit(0);
 }
 
-int	game_init(t_game *game)
+int	esc_hook(int keycode, t_game *game)
 {
-	game->mlx = mlx_init(WIDTH, HEIGHT, "so_long", false);
-	if (!game->mlx)
-	{
-		ft_putstr_fd((char *)mlx_strerror(mlx_errno), 1);
-		return (EXIT_FAILURE);
-	}
-	game->image = mlx_new_image(game->mlx, 128, 128);
-	if (!game->image)
-	{
-		mlx_close_window(game->mlx);
-		ft_putstr_fd((char *)mlx_strerror(mlx_errno), 1);
-		return(EXIT_FAILURE);
-	}
-	if (mlx_image_to_window(game->mlx, game->image, 0, 0) == -1)
-	{
-		mlx_close_window(game->mlx);
-		ft_putstr_fd((char *)mlx_strerror(mlx_errno), 1);
-		return(EXIT_FAILURE);
-	}
-	mlx_loop_hook(game->mlx, ft_hook, game->mlx);
-	mlx_loop(game->mlx);
-	return (EXIT_SUCCESS);
-}
-
-void	init_pointers(t_game *game)
-{
-	game->mlx = NULL;
-	game->image = NULL;
+	if (keycode == 65307)
+		ft_on_exit(game);
+	return (0);
 }
 
 int	main(void)
 {
 	t_game	game;
-
-	game_init(&game);
+	game.mlx = mlx_init();
+	game.mlx = mlx_new_window(game.mlx, WIDTH, HEIGHT, "Excuse me why the fuck you lookin'? What's your problem?");
+	mlx_key_hook(game.window, esc_hook, &game);
+	mlx_hook(game.window, 17, 0, ft_on_exit, &game);
+	mlx_loop(game.mlx);
 	return (0);
 }

@@ -1,5 +1,6 @@
 cmake-build-debug
-CMakeLists.txt
+#CMakeLists.txt
 .idea
+mlx_linux
 so_long
 .obj

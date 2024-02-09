@@ -6,7 +6,7 @@
 /*   By: kokaimov <kokaimov@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 20:48:47 by kokaimov          #+#    #+#             */
-/*   Updated: 2023/12/19 02:04:23 by kokaimov         ###   ########.fr       */
+/*   Updated: 2024/02/09 21:32:31 by kokaimov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,23 @@
 # include <stdarg.h>
 # include "../libft/libft.h"
 # include <stdio.h> // udalit
-# include "/Users/madvil2/Projects/so_long/mlx/include/MLX42/MLX42.h"
+# include <mlx.h>
 
-typedef struct	s_game
-{
-	mlx_t *mlx;
-	mlx_image_t *image;
+typedef struct	s_player {
+	int	x;
+	int	y;
+	int	score;
+}	t_player;
+
+typedef struct	s_game {
+	void	*mlx;
+	void	*window;
+	char	**map;
+	int		map_height;
+	int		map_width;
+	int		coin;
+	int		exit;
 }	t_game;
-
-
 
 // main.c
 

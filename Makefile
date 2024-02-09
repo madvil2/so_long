@@ -1,48 +1,59 @@
-NAME :=			so_long
+NAME :=				so_long
 
-SRC_PATH :=		srcs/
-INC_PATH :=		includes/
-LIB_PATH :=		libft/
-OBJ_PATH :=		.obj/
+SRC_PATH :=			srcs/
+INC_PATH :=			includes/
+LIB_PATH :=			libft/
+OBJ_PATH :=			.obj/
+MLX_PATH :=			mlx_linux/
 
-CC :=			cc
-CFLAGS :=		-g
-IFLAGS :=		-I $(INC_PATH) -I $(LIB_PATH)
-LFLAGS :=		-lft -L $(LIB_PATH)
-MLXFLAGS :=		/Users/madvil2/Projects/so_long/mlx/build/libmlx42.a -Iinclude -lglfw
+CC :=				cc
+CFLAGS :=			-g
+IFLAGS :=			-I $(INC_PATH) -I $(LIB_PATH) -I $(MLX_PATH)
+LFLAGS :=			-L $(LIB_PATH) -lft -L $(MLX_PATH) -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz
 
-HFILES :=		so_long
-FILES :=		utils\
-				main
-LIB :=			$(LIB_PATH)libft.a
+HFILES :=			so_long
+FILES :=			utils\
+					main
+LIB :=				$(LIB_PATH)libft.a
+MLX :=				$(MLX_PATH)libmlx_Linux.a
 
-HDRS :=			$(addprefix $(INC_PATH), $(addsuffix .h, $(HFILES)))
-SRCS :=			$(addprefix $(SRC_PATH), $(addsuffix .c, $(FILES)))
-OBJS :=			$(addprefix $(OBJ_PATH), $(SRCS:%.c=%.o))
+HDRS :=				$(addprefix $(INC_PATH), $(addsuffix .h, $(HFILES)))
+SRCS :=				$(addprefix $(SRC_PATH), $(addsuffix .c, $(FILES)))
+OBJS :=				$(SRCS:$(SRC_PATH)%.c=$(OBJ_PATH)%.o)
 
 all: $(NAME)
 
-$(NAME): $(LIB) $(OBJ_PATH) $(OBJS)
-	$(CC) $(CFLAGS) $(IFLAGS) $(LFLAGS) $(MLXFLAGS) $(OBJS) -o $(NAME)
+$(NAME): $(LIB) $(MLX) $(OBJS)
+	$(CC) $(OBJS) $(LFLAGS) -o $(NAME)
+
 $(LIB):
 	$(MAKE) -C $(dir $@) $(notdir $@)
 
-$(OBJ_PATH):
-	mkdir -p $(OBJ_PATH)$(SRC_PATH)
-$(OBJ_PATH)%.o: %.c $(HDRS)
+$(MLX):
+	git clone https://github.com/42Paris/minilibx-linux.git $(MLX_PATH)
+	$(MAKE) -C $(MLX_PATH)
+
+$(OBJS): $(OBJ_PATH)%.o: $(SRC_PATH)%.c $(HDRS)
+	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(IFLAGS) -c $< -o $@
 
 clean: mclean
 	make clean -C $(LIB_PATH)
+	make clean -C $(MLX_PATH)
+
 fclean: mfclean
 	make fclean -C $(LIB_PATH)
+	rm -rf $(MLX_PATH)
+
 re: fclean all
 
 mclean:
 	rm -f $(OBJS)
+
 mfclean:
 	rm -f $(NAME)
 	rm -rf $(OBJ_PATH)
+
 mre: mfclean all
 
 .PHONY: all clean fclean re mclean mfclean mre
