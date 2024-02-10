@@ -7,7 +7,7 @@ OBJ_PATH :=			.obj/
 MLX_PATH :=			mlx_linux/
 
 CC :=				cc
-CFLAGS :=			-g
+CFLAGS :=			-g -Wall -Werror -Wextra
 IFLAGS :=			-I $(INC_PATH) -I $(LIB_PATH) -I $(MLX_PATH)
 LFLAGS :=			-L $(LIB_PATH) -lft -L $(MLX_PATH) -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz
 
@@ -27,6 +27,7 @@ $(NAME): $(LIB) $(MLX) $(OBJS)
 	$(CC) $(OBJS) $(LFLAGS) -o $(NAME)
 
 $(LIB):
+	git clone git@github.com:madvil2/libft.git $(LIB_PATH)
 	$(MAKE) -C $(dir $@) $(notdir $@)
 
 $(MLX):

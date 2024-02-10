@@ -14,14 +14,35 @@
 # define SO_LONG_H
 #define WIDTH 512
 #define HEIGHT 512
+#define BUFF_SIZE 10000
 # include <stdarg.h>
+# include <fcntl.h>
 # include "../libft/libft.h"
-# include <stdio.h> // udalit
+
+// to delete after
+#include <time.h>
+#include <stdio.h>
+#include <stdlib.h>
+//
+
 # include <mlx.h>
+
+typedef struct	s_textures
+{
+	void	*w;
+	void	*c;
+	void	*e;
+	void	*d;
+	void	*u;
+	void	*r;
+	void	*l;
+	void	*f;
+}	t_textures;
 
 typedef struct	s_player {
 	int	x;
 	int	y;
+	char	orient;
 	int	score;
 }	t_player;
 
@@ -33,6 +54,8 @@ typedef struct	s_game {
 	int		map_width;
 	int		coin;
 	int		exit;
+	t_player	player;
+	t_textures	textures;
 }	t_game;
 
 // main.c
