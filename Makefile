@@ -27,7 +27,9 @@ $(NAME): $(LIB) $(MLX) $(OBJS)
 	$(CC) $(OBJS) $(LFLAGS) -o $(NAME)
 
 $(LIB):
-	git clone git@github.com:madvil2/libft.git $(LIB_PATH)
+	if [ ! -d "$(LIB_PATH)" ]; then \
+		git clone git@github.com:madvil2/libft.git $(LIB_PATH); \
+	fi
 	$(MAKE) -C $(dir $@) $(notdir $@)
 
 $(MLX):
