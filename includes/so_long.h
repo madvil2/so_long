@@ -61,5 +61,23 @@ typedef struct	s_game {
 // main.c
 
 // utils.c
+void	init(t_game *game);
+void	free_map(char **map);
+void	print_error(int type);
+
+// hooks.c
+int		ft_on_exit(t_game *game);
+int		esc_hook(int keycode, t_game *game);
+
+// parse.c
+char	**parse_map(char *file);
+int		is_map_rectangular(char **map);
+int		is_surrounded_by_walls(char **map);
+int		validate_contents(char **map, int *has_exit, int *has_collectible, int *has_start);
+char	**validate_input(char *file);
+
+
+// validate.c
+int	validate_map(char **map);
 
 #endif

@@ -12,8 +12,10 @@ IFLAGS :=			-I $(INC_PATH) -I $(LIB_PATH) -I $(MLX_PATH)
 LFLAGS :=			-L $(LIB_PATH) -lft -L $(MLX_PATH) -lmlx_Linux -L/usr/lib -lXext -lX11 -lm -lz
 
 HFILES :=			so_long
-FILES :=			utils\
-					main
+FILES :=			main\
+					utils\
+					hooks\
+					parse
 LIB :=				$(LIB_PATH)libft.a
 MLX :=				$(MLX_PATH)libmlx_Linux.a
 
