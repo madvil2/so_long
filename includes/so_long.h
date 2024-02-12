@@ -29,14 +29,14 @@
 
 typedef struct	s_textures
 {
-	void	*w;
-	void	*c;
-	void	*e;
-	void	*d;
-	void	*u;
-	void	*r;
-	void	*l;
-	void	*f;
+	void	*walls;
+	void	*collectibles;
+	void	*exit;
+	void	*down;
+	void	*up;
+	void	*right;
+	void	*left;
+	void	*floor;
 }	t_textures;
 
 typedef struct	s_player {
@@ -52,7 +52,7 @@ typedef struct	s_game {
 	char	**map;
 	int		map_height;
 	int		map_width;
-	int		coin;
+	int		coins;
 	int		exit;
 	t_player	player;
 	t_textures	textures;
@@ -73,11 +73,11 @@ int		esc_hook(int keycode, t_game *game);
 char	**parse_map(char *file);
 int		is_map_rectangular(char **map);
 int		is_surrounded_by_walls(char **map);
-int		validate_contents(char **map, int *has_exit, int *has_collectible, int *has_start);
-char	**validate_input(char *file);
+int		validate_contents(char **map, int *has_exit, int *has_start, int *has_coins, t_game *game);
+char	**validate_input(char *file, t_game *game);
 
 
 // validate.c
-int	validate_map(char **map);
+int	validate_map(char **map, t_game *game);
 
 #endif

@@ -17,14 +17,15 @@ void	init(t_game *game)
 	game->mlx = NULL;
 	game->window = NULL;
 	game->map = NULL;
-	game->textures.w = NULL;
-	game->textures.f = NULL;
-	game->textures.d = NULL;
-	game->textures.l = NULL;
-	game->textures.r = NULL;
-	game->textures.u = NULL;
-	game->textures.c = NULL;
-	game->textures.e = NULL;
+	game->coins = 0;
+	game->textures.walls = NULL;
+	game->textures.floor = NULL;
+	game->textures.down = NULL;
+	game->textures.left = NULL;
+	game->textures.right = NULL;
+	game->textures.up = NULL;
+	game->textures.collectibles = NULL;
+	game->textures.exit = NULL;
 	game->player.orient = 'D';
 	game->player.score = 0;
 	game->exit = 0;
@@ -40,6 +41,7 @@ void	free_map(char **map)
 	while (map[i] != NULL)
 		free(map[i++]);
 	free(map);
+	map = NULL;
 }
 
 void	print_error(int type)
@@ -59,5 +61,6 @@ void	print_error(int type)
 		ft_printf("The map must contain exactly one start.\n");
 	else if (type == 7)
 		ft_printf("The map must have \".ber\" extension.\n");
-	exit(type);
+	else if (type == 8)
+		ft_printf("The map must have a valid path in it.\n");
 }

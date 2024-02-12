@@ -90,11 +90,14 @@ int	is_surrounded_by_walls(char **map)
 	return (1);
 }
 
-int	validate_contents(char **map, int *has_exit, int *has_collectible, int *has_start)
+int	validate_contents(char **map, int *has_exit, int *has_start, int *has_coins, t_game *game)
 {
 	int	i;
 	int	j;
 
+	*has_exit = 0;
+	*has_start = 0;
+	*has_coins = 0;
 	i = 0;
 	while (map[i])
 	{
@@ -104,9 +107,13 @@ int	validate_contents(char **map, int *has_exit, int *has_collectible, int *has_
 			if (map[i][j] == 'E')
 				(*has_exit)++;
 			else if (map[i][j] == 'C')
-				(*has_collectible)++;
+				(*has_coins)++;
 			else if (map[i][j] == 'P')
+			{
+				game->player.y = j;
+				game->player.x = i;
 				(*has_start)++;
+			}
 			else if (!(map[i][j] == '0' || map[i][j] == '1'))
 				return (print_error(3), 0);
 			j++;
@@ -116,9 +123,9 @@ int	validate_contents(char **map, int *has_exit, int *has_collectible, int *has_
 	return (1);
 }
 
-char	**validate_input(char *file)
+char	**validate_input(char *file, t_game *game)
 {
-	char	**map;
+	char **map;
 	size_t	nameLen;
 
 	nameLen = ft_strlen(file);
@@ -127,6 +134,7 @@ char	**validate_input(char *file)
 	map = parse_map(file);
 	if (!map)
 		return (NULL);
-	validate_map(map);
-	return (map);
+	if (validate_map(map, game))
+		return (map);
+	return (NULL);
 }

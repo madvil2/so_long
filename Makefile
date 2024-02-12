@@ -15,7 +15,8 @@ HFILES :=			so_long
 FILES :=			main\
 					utils\
 					hooks\
-					parse
+					parse\
+					validate
 LIB :=				$(LIB_PATH)libft.a
 MLX :=				$(MLX_PATH)libmlx_Linux.a
 

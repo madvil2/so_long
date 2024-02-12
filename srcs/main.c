@@ -19,7 +19,7 @@ int	main(int ac, char **av)
 		t_game	game;
 
 		init(&game);
-		game.map = validate_input(av[1]);
+		game.map = validate_input(av[1], &game);
 		if (!game.map)
 			return (0);
 		game.mlx = mlx_init();
