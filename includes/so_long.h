@@ -14,26 +14,23 @@
 # define SO_LONG_H
 #define WIDTH 512
 #define HEIGHT 512
-#define BUFF_SIZE 10000
 # include <stdarg.h>
 # include <fcntl.h>
 # include "../libft/libft.h"
+# include <mlx.h>
 
 // to delete after
-#include <time.h>
-#include <stdio.h>
-#include <stdlib.h>
+# include <time.h>
+# include <stdio.h>
+# include <stdlib.h>
 //
-
-# include <mlx.h>
 
 typedef struct	s_textures
 {
 	void	*walls;
-	void	*collectibles;
+	void	*collectibles1;
+	void	*collectibles2;
 	void	*exit;
-	void	*down;
-	void	*up;
 	void	*right;
 	void	*left;
 	void	*floor;
@@ -61,6 +58,7 @@ typedef struct	s_game {
 // main.c
 
 // utils.c
+int		init_textures(t_game *game);
 void	init(t_game *game);
 void	free_map(char **map);
 void	print_error(int type);
@@ -79,5 +77,8 @@ char	**validate_input(char *file, t_game *game);
 
 // validate.c
 int	validate_map(char **map, t_game *game);
+
+// game.c
+void	render_map(t_game *game);
 
 #endif

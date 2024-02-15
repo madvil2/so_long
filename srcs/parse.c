@@ -117,8 +117,10 @@ int	validate_contents(char **map, int *has_exit, int *has_start, int *has_coins,
 			else if (!(map[i][j] == '0' || map[i][j] == '1'))
 				return (print_error(3), 0);
 			j++;
+			game->map_width=j;
 		}
 		i++;
+		game->map_height=i;
 	}
 	return (1);
 }

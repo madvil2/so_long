@@ -12,6 +12,23 @@
 
 #include "../includes/so_long.h"
 
+int	init_textures(t_game *game)
+{
+	int	a;
+
+	a = 32;
+	game->textures.walls = mlx_xpm_file_to_image(game->mlx, "textures/wall.xpm", &a, &a);
+	game->textures.floor = mlx_xpm_file_to_image(game->mlx, "textures/floor.xpm", &a, &a);
+	game->textures.right = mlx_xpm_file_to_image(game->mlx, "textures/p_right.xpm", &a, &a);
+	game->textures.left = mlx_xpm_file_to_image(game->mlx, "textures/p_left.xpm", &a, &a);
+	game->textures.collectibles1 = mlx_xpm_file_to_image(game->mlx, "textures/exp1.xpm", &a, &a);
+	game->textures.collectibles2 = mlx_xpm_file_to_image(game->mlx, "textures/exp2.xpm", &a, &a);
+	game->textures.exit = mlx_xpm_file_to_image(game->mlx, "textures/exit.xpm", &a, &a);
+	if (!game->textures.walls || !game->textures.floor || !game->textures.right || !game->textures.left || !game->textures.collectibles1 || !game->textures.collectibles2 || !game->textures.exit)
+		return (0);
+	return (1);
+}
+
 void	init(t_game *game)
 {
 	game->mlx = NULL;
@@ -20,13 +37,12 @@ void	init(t_game *game)
 	game->coins = 0;
 	game->textures.walls = NULL;
 	game->textures.floor = NULL;
-	game->textures.down = NULL;
 	game->textures.left = NULL;
 	game->textures.right = NULL;
-	game->textures.up = NULL;
-	game->textures.collectibles = NULL;
+	game->textures.collectibles1 = NULL;
+	game->textures.collectibles2 = NULL;
 	game->textures.exit = NULL;
-	game->player.orient = 'D';
+	game->player.orient = 'R';
 	game->player.score = 0;
 	game->exit = 0;
 }

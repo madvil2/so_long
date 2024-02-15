@@ -23,9 +23,13 @@ int	main(int ac, char **av)
 		if (!game.map)
 			return (0);
 		game.mlx = mlx_init();
-		game.window = mlx_new_window(game.mlx, WIDTH, HEIGHT, "Excuse me why the fuck you lookin'? What's your problem?");
+		if (game.mlx)
+			game.window = mlx_new_window(game.mlx, 32 * game.map_width, 32 * game.map_height, "Excuse me why the fuck you lookin'? What's your problem?");
+		if (!game.mlx || !game.window || !init_textures(&game))
+			return (0);
+		render_map(&game);
 		mlx_key_hook(game.window, esc_hook, &game);
-		mlx_hook(game.window, 17, 0, ft_on_exit, &game);
+		mlx_hook(game.window, 17, 1L << 2, ft_on_exit, &game);
 		mlx_loop(game.mlx);
 	}
 	return (0);

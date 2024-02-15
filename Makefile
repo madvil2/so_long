@@ -2,8 +2,8 @@ NAME :=				so_long
 
 SRC_PATH :=			srcs/
 INC_PATH :=			includes/
-LIB_PATH :=			libft/
 OBJ_PATH :=			.obj/
+LIB_PATH :=			libft/
 MLX_PATH :=			mlx_linux/
 
 CC :=				cc
@@ -16,7 +16,8 @@ FILES :=			main\
 					utils\
 					hooks\
 					parse\
-					validate
+					validate\
+					game
 LIB :=				$(LIB_PATH)libft.a
 MLX :=				$(MLX_PATH)libmlx_Linux.a
 
@@ -30,9 +31,7 @@ $(NAME): $(LIB) $(MLX) $(OBJS)
 	$(CC) $(OBJS) $(LFLAGS) -o $(NAME)
 
 $(LIB):
-	if [ ! -d "$(LIB_PATH)" ]; then \
-		git clone git@github.com:madvil2/libft.git $(LIB_PATH); \
-	fi
+	git clone git@github.com:madvil2/libft.git $(LIB_PATH);
 	$(MAKE) -C $(dir $@) $(notdir $@)
 
 $(MLX):
@@ -48,7 +47,7 @@ clean: mclean
 	make clean -C $(MLX_PATH)
 
 fclean: mfclean
-	make fclean -C $(LIB_PATH)
+	rm -rf $(LIB_PATH)
 	rm -rf $(MLX_PATH)
 
 re: fclean all
