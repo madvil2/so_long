@@ -51,6 +51,7 @@ typedef struct	s_game {
 	int		map_width;
 	int		coins;
 	int		exit;
+	int		coin_anim_toggle;
 	t_player	player;
 	t_textures	textures;
 }	t_game;
@@ -65,7 +66,7 @@ void	print_error(int type);
 
 // hooks.c
 int		ft_on_exit(t_game *game);
-int		esc_hook(int keycode, t_game *game);
+int		key_hook(int keycode, t_game *game);
 
 // parse.c
 char	**parse_map(char *file);
@@ -79,6 +80,7 @@ char	**validate_input(char *file, t_game *game);
 int	validate_map(char **map, t_game *game);
 
 // game.c
+void	put_texture(int x, int y, t_game *game, char type);
 void	render_map(t_game *game);
 
 #endif

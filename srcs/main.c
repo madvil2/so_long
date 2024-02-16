@@ -6,7 +6,7 @@
 /*   By: kokaimov <kokaimov@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/17 21:00:08 by kokaimov          #+#    #+#             */
-/*   Updated: 2024/02/10 22:57:46 by kokaimov         ###   ########.fr       */
+/*   Updated: 2024/02/16 00:15:05 by kokaimov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int ac, char **av)
 		if (!game.mlx || !game.window || !init_textures(&game))
 			return (0);
 		render_map(&game);
-		mlx_key_hook(game.window, esc_hook, &game);
+		mlx_key_hook(game.window, key_hook, &game);
 		mlx_hook(game.window, 17, 1L << 2, ft_on_exit, &game);
 		mlx_loop(game.mlx);
 	}

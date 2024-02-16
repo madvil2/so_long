@@ -10,6 +10,7 @@ set(INC_PATH "includes/")
 set(LIB_PATH "libft/")
 set(OBJ_PATH "${CMAKE_BINARY_DIR}/obj/") # CMake's binary dir for output
 set(MLX_PATH "mlx_linux/")
+set(TEXTURES_PATH "${CMAKE_SOURCE_DIR}/textures/")
 
 # Include directories for compiler
 include_directories(${INC_PATH})
@@ -36,9 +37,12 @@ add_custom_target(mlx
 )
 add_dependencies(${PROJECT_NAME} mlx)
 
+add_definitions(-DTEXTURES_PATH="${TEXTURES_PATH}")
+
 # Find X11
 find_package(X11 REQUIRED)
 find_package(ZLIB REQUIRED)
+
 
 # Link libraries
 target_link_libraries(${PROJECT_NAME}

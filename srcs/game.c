@@ -12,17 +12,22 @@
 
 #include "../includes/so_long.h"
 
-static void	put_texture(int x, int y, t_game *game, char type)
+void	put_texture(int x, int y, t_game *game, char type)
 {
 	if (type == 'o')
 		mlx_put_image_to_window(game->mlx, game->window, game->textures.floor, 32 * x, 32 * y);
-	else if (type == 'c')
-		mlx_put_image_to_window(game->mlx, game->window, game->textures.collectibles1, 32 * x, 32 * y);
-	else if (type == 'e')
+	if (type == 'c')
+	{
+		if (game->coin_anim_toggle == 1)
+			mlx_put_image_to_window(game->mlx, game->window, game->textures.collectibles1, 32 * x, 32 * y);
+		else
+			mlx_put_image_to_window(game->mlx, game->window, game->textures.collectibles2, 32 * x, 32 * y);
+	}
+	if (type == 'e')
 		mlx_put_image_to_window(game->mlx, game->window, game->textures.exit, 32 * x, 32 * y);
-	else if (type == 'p' && game->player.orient == 'L')
+	if (type == 'p' && game->player.orient == 'L')
 		mlx_put_image_to_window(game->mlx, game->window, game->textures.left, 32 * x, 32 * y);
-	else if (type == 'p' && game->player.orient == 'R')
+	if (type == 'p' && game->player.orient == 'R')
 		mlx_put_image_to_window(game->mlx, game->window, game->textures.right, 32 * x, 32 * y);
 
 }
@@ -48,4 +53,5 @@ void	render_map(t_game *game)
 			}
 		}
 	}
+	mlx_string_put(game->mlx, game->window, 0, 31 * game->map_height, 0X00FFFFFF, "Numbers of moves: 0");
 }

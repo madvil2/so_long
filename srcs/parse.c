@@ -110,8 +110,8 @@ int	validate_contents(char **map, int *has_exit, int *has_start, int *has_coins,
 				(*has_coins)++;
 			else if (map[i][j] == 'P')
 			{
-				game->player.y = j;
-				game->player.x = i;
+				game->player.y = i;
+				game->player.x = j;
 				(*has_start)++;
 			}
 			else if (!(map[i][j] == '0' || map[i][j] == '1'))

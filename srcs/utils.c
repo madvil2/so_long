@@ -15,15 +15,36 @@
 int	init_textures(t_game *game)
 {
 	int	a;
+	char path[128]; // Ensure this is large enough to hold the full path
 
 	a = 32;
-	game->textures.walls = mlx_xpm_file_to_image(game->mlx, "textures/wall.xpm", &a, &a);
-	game->textures.floor = mlx_xpm_file_to_image(game->mlx, "textures/floor.xpm", &a, &a);
-	game->textures.right = mlx_xpm_file_to_image(game->mlx, "textures/p_right.xpm", &a, &a);
-	game->textures.left = mlx_xpm_file_to_image(game->mlx, "textures/p_left.xpm", &a, &a);
-	game->textures.collectibles1 = mlx_xpm_file_to_image(game->mlx, "textures/exp1.xpm", &a, &a);
-	game->textures.collectibles2 = mlx_xpm_file_to_image(game->mlx, "textures/exp2.xpm", &a, &a);
-	game->textures.exit = mlx_xpm_file_to_image(game->mlx, "textures/exit.xpm", &a, &a);
+//	game->textures.walls = mlx_xpm_file_to_image(game->mlx, "textures/wall.xpm", &a, &a);
+//	game->textures.floor = mlx_xpm_file_to_image(game->mlx, "textures/floor.xpm", &a, &a);
+//	game->textures.right = mlx_xpm_file_to_image(game->mlx, "textures/p_right.xpm", &a, &a);
+//	game->textures.left = mlx_xpm_file_to_image(game->mlx, "textures/p_left.xpm", &a, &a);
+//	game->textures.collectibles1 = mlx_xpm_file_to_image(game->mlx, "textures/exp1.xpm", &a, &a);
+//	game->textures.collectibles2 = mlx_xpm_file_to_image(game->mlx, "textures/exp2.xpm", &a, &a);
+//	game->textures.exit = mlx_xpm_file_to_image(game->mlx, "textures/exit.xpm", &a, &a);
+	sprintf(path, "%swall.xpm", TEXTURES_PATH);
+	game->textures.walls = mlx_xpm_file_to_image(game->mlx, path, &a, &a);
+
+	sprintf(path, "%sfloor.xpm", TEXTURES_PATH);
+	game->textures.floor = mlx_xpm_file_to_image(game->mlx, path, &a, &a);
+
+	sprintf(path, "%sp_right.xpm", TEXTURES_PATH);
+	game->textures.right = mlx_xpm_file_to_image(game->mlx, path, &a, &a);
+
+	sprintf(path, "%sp_left.xpm", TEXTURES_PATH);
+	game->textures.left = mlx_xpm_file_to_image(game->mlx, path, &a, &a);
+
+	sprintf(path, "%sexp1.xpm", TEXTURES_PATH);
+	game->textures.collectibles1 = mlx_xpm_file_to_image(game->mlx, path, &a, &a);
+
+	sprintf(path, "%sexp2.xpm", TEXTURES_PATH);
+	game->textures.collectibles2 = mlx_xpm_file_to_image(game->mlx, path, &a, &a);
+
+	sprintf(path, "%sexit.xpm", TEXTURES_PATH);
+	game->textures.exit = mlx_xpm_file_to_image(game->mlx, path, &a, &a);
 	if (!game->textures.walls || !game->textures.floor || !game->textures.right || !game->textures.left || !game->textures.collectibles1 || !game->textures.collectibles2 || !game->textures.exit)
 		return (0);
 	return (1);
@@ -45,6 +66,7 @@ void	init(t_game *game)
 	game->player.orient = 'R';
 	game->player.score = 0;
 	game->exit = 0;
+	game->coin_anim_toggle = 0;
 }
 
 void	free_map(char **map)

@@ -39,7 +39,7 @@ void	flood_fill(char **map, int x, int y, t_game *game, int *has_exit)
 int	flood_fill_check(char **map, t_game *game, int *has_exit)
 {
 	*has_exit = 0;
-	flood_fill(map, game->player.x, game->player.y, game, has_exit);
+	flood_fill(map, game->player.y, game->player.x, game, has_exit);
 	if (*has_exit != 1)
 		return (0);
 	return (1);
