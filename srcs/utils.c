@@ -66,15 +66,14 @@ void	init(t_game *game)
 	game->player.orient = 'R';
 	game->player.score = 0;
 	game->exit = 0;
-	game->coin_anim_toggle = 0;
 }
 
 void	free_map(char **map)
 {
-	if (map == NULL)
-		return;
 	int	i;
 
+	if (map == NULL)
+		return ;
 	i = 0;
 	while (map[i] != NULL)
 		free(map[i++]);
@@ -101,4 +100,22 @@ void	print_error(int type)
 		ft_printf("The map must have \".ber\" extension.\n");
 	else if (type == 8)
 		ft_printf("The map must have a valid path in it.\n");
+}
+
+void	print_moves(int *moves, t_game *game)
+{
+	char	*mv_str;
+
+	ft_printf("Number of moves: %i\n", ++(*moves));
+	mv_str = ft_itoa(*moves);
+	if (!mv_str)
+	{
+		game->exit = 1;
+		return ;
+	}
+	mlx_put_image_to_window(game->mlx, game->window, game->textures.walls,
+		32 * 3, 32 * (game->map_height - 1));
+	mlx_string_put(game->mlx, game->window, 110,
+		31 * game->map_height, 0x00FFFFFF, mv_str);
+	free(mv_str);
 }
