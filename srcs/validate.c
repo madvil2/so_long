@@ -61,26 +61,26 @@ static int	is_surrounded_by_walls(char **map)
 
 int	validate_contents(int *flags, t_game *game, int i, int j)
 {
-	while (game->map[i])
+	while (game->map.map[i])
 	{
 		j = 0;
-		while (game->map[i][j])
+		while (game->map.map[i][j])
 		{
-			if (game->map[i][j] == 'E')
+			if (game->map.map[i][j] == 'E')
 				(flags[0])++;
-			else if (game->map[i][j] == 'C')
+			else if (game->map.map[i][j] == 'C')
 				(flags[1])++;
-			else if (game->map[i][j] == 'P')
+			else if (game->map.map[i][j] == 'P')
 			{
 				game->player.y = i;
 				game->player.x = j;
 				(flags[2])++;
 			}
-			else if (!(game->map[i][j] == '0' || game->map[i][j] == '1'))
+			else if (!(game->map.map[i][j] == '0' || game->map.map[i][j] == '1'))
 				return (print_error(3), 0);
-			game->map_width = ++j;
+			game->map.width = ++j;
 		}
-		game->map_height = ++i;
+		game->map.height = ++i;
 	}
 	return (1);
 }
@@ -92,8 +92,8 @@ int	validate_map(t_game *game)
 	flags[0] = 0;
 	flags[1] = 0;
 	flags[2] = 0;
-	if (!is_map_rectangular(game->map) || !is_surrounded_by_walls(game->map))
-		return (free_map(game->map), 0);
+	if (!is_map_rectangular(game->map.map) || !is_surrounded_by_walls(game->map.map))
+		return (free_map(game->map.map), 0);
 	if (!validate_contents(flags, game, 0, 0)
 		|| flags[0] != 1 || flags[1] < 1 || flags[2] != 1)
 	{
@@ -103,10 +103,10 @@ int	validate_map(t_game *game)
 			print_error(5);
 		if (flags[2] != 1)
 			print_error(6);
-		free_map(game->map);
+		free_map(game->map.map);
 		return (0);
 	}
-	if (!flood_fill_check(game, &flags[0]) || game->coins != flags[2])
-		return (print_error(8), free_map(game->map), 0);
+	if (!flood_fill_check(game, &flags[0]) || game->map.coins != flags[2])
+		return (print_error(8), free_map(game->map.map), 0);
 	return (1);
 }

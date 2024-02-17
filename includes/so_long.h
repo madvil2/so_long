@@ -41,14 +41,18 @@ typedef struct	s_player {
 	int	score;
 }	t_player;
 
+typedef struct	s_map {
+	char	**map;
+	int		height;
+	int		width;
+	int		coins;
+	int		exit;
+}	t_map;
+
 typedef struct	s_game {
 	void	*mlx;
 	void	*window;
-	char	**map;
-	int		map_height;
-	int		map_width;
-	int		coins;
-	int		exit;
+	t_map	map;
 	t_player	player;
 	t_textures	textures;
 }	t_game;

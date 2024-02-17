@@ -37,22 +37,22 @@ void	render_map(t_game *game)
 	int	y;
 
 	y = -1;
-	while (++y < game->map_height)
+	while (++y < game->map.height)
 	{
 		x = -1;
-		while (++x < game->map_width)
+		while (++x < game->map.width)
 		{
-			if (game->map[y][x] == '1')
+			if (game->map.map[y][x] == '1')
 				mlx_put_image_to_window(game->mlx, game->window,
 					game->textures.walls, 32 * x, 32 * y);
 			else
 			{
 				put_texture(x, y, game, 'o');
-				if (game->map[y][x] != '0' && game->map[y][x] != 'o')
-					put_texture(x, y, game, game->map[y][x]);
+				if (game->map.map[y][x] != '0' && game->map.map[y][x] != 'o')
+					put_texture(x, y, game, game->map.map[y][x]);
 			}
 		}
 	}
 	mlx_string_put(game->mlx, game->window, 0,
-		31 * game->map_height, 0X00FFFFFF, "Numbers of moves: 0");
+		31 * game->map.height, 0X00FFFFFF, "Numbers of moves: 0");
 }

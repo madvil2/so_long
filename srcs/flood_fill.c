@@ -14,24 +14,24 @@
 
 void	flood_fill(int x, int y, t_game *game, int *has_exit)
 {
-	if (game->map[x][y] == '1' || game->map[x][y] == 'e'
-		|| game->map[x][y] == 'c' || game->map[x][y] == 'o'
-		|| game->map[x][y] == 'p')
+	if (game->map.map[x][y] == '1' || game->map.map[x][y] == 'e'
+		|| game->map.map[x][y] == 'c' || game->map.map[x][y] == 'o'
+		|| game->map.map[x][y] == 'p')
 		return ;
-	if (game->map[x][y] == 'E')
+	if (game->map.map[x][y] == 'E')
 	{
-		game->map[x][y] = 'e';
+		game->map.map[x][y] = 'e';
 		*has_exit = 1;
 	}
-	if (game->map[x][y] == 'C')
+	if (game->map.map[x][y] == 'C')
 	{
-		game->map[x][y] = 'c';
-		game->coins++;
+		game->map.map[x][y] = 'c';
+		game->map.coins++;
 	}
-	if (game->map[x][y] == '0')
-		game->map[x][y] = 'o';
-	if (game->map[x][y] == 'P')
-		game->map[x][y] = 'p';
+	if (game->map.map[x][y] == '0')
+		game->map.map[x][y] = 'o';
+	if (game->map.map[x][y] == 'P')
+		game->map.map[x][y] = 'p';
 	flood_fill(x + 1, y, game, has_exit);
 	flood_fill(x - 1, y, game, has_exit);
 	flood_fill(x, y + 1, game, has_exit);

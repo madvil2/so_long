@@ -34,8 +34,8 @@ int	main(int ac, char **av)
 			return (0);
 		game.mlx = mlx_init();
 		if (game.mlx)
-			game.window = mlx_new_window(game.mlx, 32 * game.map_width,
-					32 * game.map_height, "so_long");
+			game.window = mlx_new_window(game.mlx, 32 * game.map.width,
+					32 * game.map.height, "so_long");
 		if (!game.mlx || !game.window || !init_textures(&game))
 			return (0);
 		render_map(&game);

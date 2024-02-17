@@ -65,8 +65,8 @@ int	validate_input(char *file, t_game *game)
 	name_len = ft_strlen(file);
 	if (name_len < 4 || ft_strncmp(&file[name_len - 4], ".ber", 4))
 		return (print_error(7), 0);
-	game->map = parse_map(file);
-	if (!game->map)
+	game->map.map = parse_map(file);
+	if (!game->map.map)
 		return (0);
 	if (validate_map(game))
 		return (1);

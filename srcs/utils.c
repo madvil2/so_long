@@ -54,8 +54,8 @@ void	init(t_game *game)
 {
 	game->mlx = NULL;
 	game->window = NULL;
-	game->map = NULL;
-	game->coins = 0;
+	game->map.map = NULL;
+	game->map.coins = 0;
 	game->textures.walls = NULL;
 	game->textures.floor = NULL;
 	game->textures.left = NULL;
@@ -65,7 +65,7 @@ void	init(t_game *game)
 	game->textures.exit = NULL;
 	game->player.orient = 'R';
 	game->player.score = 0;
-	game->exit = 0;
+	game->map.exit = 0;
 }
 
 void	free_map(char **map)
@@ -110,12 +110,12 @@ void	print_moves(int *moves, t_game *game)
 	mv_str = ft_itoa(*moves);
 	if (!mv_str)
 	{
-		game->exit = 1;
+		game->map.exit = 1;
 		return ;
 	}
 	mlx_put_image_to_window(game->mlx, game->window, game->textures.walls,
-		32 * 3, 32 * (game->map_height - 1));
+		32 * 3, 32 * (game->map.height - 1));
 	mlx_string_put(game->mlx, game->window, 110,
-		31 * game->map_height, 0x00FFFFFF, mv_str);
+		31 * game->map.height, 0x00FFFFFF, mv_str);
 	free(mv_str);
 }

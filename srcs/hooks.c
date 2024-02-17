@@ -14,116 +14,116 @@
 
 void	move_up(t_game *game)
 {
-	if (game->map[game->player.y - 1][game->player.x] == '1')
+	if (game->map.map[game->player.y - 1][game->player.x] == '1')
 		return (put_texture(game->player.x, game->player.y, game, 'p'));
-	if (game->map[game->player.y][game->player.x] != 'e')
-		game->map[game->player.y][game->player.x] = 'o';
+	if (game->map.map[game->player.y][game->player.x] != 'e')
+		game->map.map[game->player.y][game->player.x] = 'o';
 	put_texture(game->player.x, game->player.y, game, 'o');
 	put_texture(game->player.x, game->player.y, game,
-		game->map[game->player.y][game->player.x]);
+		game->map.map[game->player.y][game->player.x]);
 	game->player.y--;
-	if (game->map[game->player.y][game->player.x] == 'c'
-		|| game->map[game->player.y][game->player.x] == 'o')
+	if (game->map.map[game->player.y][game->player.x] == 'c'
+		|| game->map.map[game->player.y][game->player.x] == 'o')
 	{
-		if (game->map[game->player.y][game->player.x] == 'c')
+		if (game->map.map[game->player.y][game->player.x] == 'c')
 			game->player.score++;
 		put_texture(game->player.x, game->player.y, game, 'o');
 	}
 	put_texture(game->player.x, game->player.y, game, 'p');
-	if (game->map[game->player.y][game->player.x] == 'e'
-		&& game->player.score == game->coins)
+	if (game->map.map[game->player.y][game->player.x] == 'e'
+		&& game->player.score == game->map.coins)
 	{
-		game->exit = 1;
+		game->map.exit = 1;
 		return ;
 	}
-	if (game->map[game->player.y][game->player.x] != 'e')
-		game->map[game->player.y][game->player.x] = 'p';
+	if (game->map.map[game->player.y][game->player.x] != 'e')
+		game->map.map[game->player.y][game->player.x] = 'p';
 }
 
 void	move_down(t_game *game)
 {
-	if (game->map[game->player.y + 1][game->player.x] == '1')
+	if (game->map.map[game->player.y + 1][game->player.x] == '1')
 		return (put_texture(game->player.x, game->player.y, game, 'p'));
-	if (game->map[game->player.y][game->player.x] != 'e')
-		game->map[game->player.y][game->player.x] = 'o';
+	if (game->map.map[game->player.y][game->player.x] != 'e')
+		game->map.map[game->player.y][game->player.x] = 'o';
 	put_texture(game->player.x, game->player.y, game, 'o');
 	put_texture(game->player.x, game->player.y, game,
-		game->map[game->player.y][game->player.x]);
+		game->map.map[game->player.y][game->player.x]);
 	game->player.y++;
-	if (game->map[game->player.y][game->player.x] == 'c'
-		|| game->map[game->player.y][game->player.x] == 'o')
+	if (game->map.map[game->player.y][game->player.x] == 'c'
+		|| game->map.map[game->player.y][game->player.x] == 'o')
 	{
-		if (game->map[game->player.y][game->player.x] == 'c')
+		if (game->map.map[game->player.y][game->player.x] == 'c')
 			game->player.score++;
 		put_texture(game->player.x, game->player.y, game, 'o');
 	}
 	put_texture(game->player.x, game->player.y, game, 'p');
-	if (game->map[game->player.y][game->player.x] == 'e'
-		&& game->player.score == game->coins)
+	if (game->map.map[game->player.y][game->player.x] == 'e'
+		&& game->player.score == game->map.coins)
 	{
-		game->exit = 1;
+		game->map.exit = 1;
 		return ;
 	}
-	if (game->map[game->player.y][game->player.x] != 'e')
-		game->map[game->player.y][game->player.x] = 'p';
+	if (game->map.map[game->player.y][game->player.x] != 'e')
+		game->map.map[game->player.y][game->player.x] = 'p';
 }
 
 void	move_left(t_game *game)
 {
 	game->player.orient = 'L';
-	if (game->map[game->player.y][game->player.x - 1] == '1')
+	if (game->map.map[game->player.y][game->player.x - 1] == '1')
 		return (put_texture(game->player.x, game->player.y, game, 'p'));
-	if (game->map[game->player.y][game->player.x] != 'e')
-		game->map[game->player.y][game->player.x] = 'o';
+	if (game->map.map[game->player.y][game->player.x] != 'e')
+		game->map.map[game->player.y][game->player.x] = 'o';
 	put_texture(game->player.x, game->player.y, game, 'o');
 	put_texture(game->player.x, game->player.y, game,
-		game->map[game->player.y][game->player.x]);
+		game->map.map[game->player.y][game->player.x]);
 	game->player.x--;
-	if (game->map[game->player.y][game->player.x] == 'c'
-		|| game->map[game->player.y][game->player.x] == 'o')
+	if (game->map.map[game->player.y][game->player.x] == 'c'
+		|| game->map.map[game->player.y][game->player.x] == 'o')
 	{
-		if (game->map[game->player.y][game->player.x] == 'c')
+		if (game->map.map[game->player.y][game->player.x] == 'c')
 			game->player.score++;
 		put_texture(game->player.x, game->player.y, game, 'o');
 	}
 	put_texture(game->player.x, game->player.y, game, 'p');
-	if (game->map[game->player.y][game->player.x] == 'e'
-		&& game->player.score == game->coins)
+	if (game->map.map[game->player.y][game->player.x] == 'e'
+		&& game->player.score == game->map.coins)
 	{
-		game->exit = 1;
+		game->map.exit = 1;
 		return ;
 	}
-	if (game->map[game->player.y][game->player.x] != 'e')
-		game->map[game->player.y][game->player.x] = 'p';
+	if (game->map.map[game->player.y][game->player.x] != 'e')
+		game->map.map[game->player.y][game->player.x] = 'p';
 }
 
 void	move_right(t_game *game)
 {
 	game->player.orient = 'R';
-	if (game->map[game->player.y][game->player.x + 1] == '1')
+	if (game->map.map[game->player.y][game->player.x + 1] == '1')
 		return (put_texture(game->player.x, game->player.y, game, 'p'));
-	if (game->map[game->player.y][game->player.x] != 'e')
-		game->map[game->player.y][game->player.x] = 'o';
+	if (game->map.map[game->player.y][game->player.x] != 'e')
+		game->map.map[game->player.y][game->player.x] = 'o';
 	put_texture(game->player.x, game->player.y, game, 'o');
 	put_texture(game->player.x, game->player.y, game,
-		game->map[game->player.y][game->player.x]);
+		game->map.map[game->player.y][game->player.x]);
 	game->player.x++;
-	if (game->map[game->player.y][game->player.x] == 'c'
-		|| game->map[game->player.y][game->player.x] == 'o')
+	if (game->map.map[game->player.y][game->player.x] == 'c'
+		|| game->map.map[game->player.y][game->player.x] == 'o')
 	{
-		if (game->map[game->player.y][game->player.x] == 'c')
+		if (game->map.map[game->player.y][game->player.x] == 'c')
 			game->player.score++;
 		put_texture(game->player.x, game->player.y, game, 'o');
 	}
 	put_texture(game->player.x, game->player.y, game, 'p');
-	if (game->map[game->player.y][game->player.x] == 'e'
-		&& game->player.score == game->coins)
+	if (game->map.map[game->player.y][game->player.x] == 'e'
+		&& game->player.score == game->map.coins)
 	{
-		game->exit = 1;
+		game->map.exit = 1;
 		return ;
 	}
-	if (game->map[game->player.y][game->player.x] != 'e')
-		game->map[game->player.y][game->player.x] = 'p';
+	if (game->map.map[game->player.y][game->player.x] != 'e')
+		game->map.map[game->player.y][game->player.x] = 'p';
 }
 
 int	key_hook(int keycode, t_game *game)
@@ -144,7 +144,7 @@ int	key_hook(int keycode, t_game *game)
 		move_right(game);
 	if (game->player.x != x_start || game->player.y != y_start)
 		print_moves(&moves, game);
-	if (keycode == 65307 || game->exit == 1)
+	if (keycode == 65307 || game->map.exit == 1)
 		ft_on_exit(game);
 	return (0);
 }
