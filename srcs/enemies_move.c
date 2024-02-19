@@ -25,7 +25,8 @@ void	change_enemy_direction(t_bot *enemy)
 		else if (enemy->orient == 'L')
 			enemy->orient = 'U';
 	}
-	else {
+	else
+	{
 		if (enemy->orient == 'U')
 			enemy->orient = 'L';
 		else if (enemy->orient == 'L')
@@ -37,7 +38,7 @@ void	change_enemy_direction(t_bot *enemy)
 	}
 }
 
-int		kill(t_game *game, t_bot *enemy)
+int	kill(t_game *game, t_bot *enemy)
 {
 	int	dx;
 	int	dy;
@@ -61,42 +62,59 @@ int		kill(t_game *game, t_bot *enemy)
 	return (0);
 }
 
-void	move_enemy(t_game *game, t_bot *enemy) {
-	int next_x = enemy->x;
-	int next_y = enemy->y;
-	int occupied = 0;
-	int i = 0;
+void	move(t_bot *enemy, int *next_y, int *next_x)
+{
+	if (enemy->orient == 'U')
+		next_y--;
+	else if (enemy->orient == 'D')
+		next_y++;
+	else if (enemy->orient == 'L')
+		next_x--;
+	else if (enemy->orient == 'R')
+		next_x++;
+}
 
+void	move_enemy(t_game *game, t_bot *enemy)
+{
+	int	next_x;
+	int	next_y;
+	int	occupied;
+	int	i;
+
+	next_x = enemy->x;
+	next_y = enemy->y;
+	occupied = 0;
+	i = 0;
 	if (rand() % 100 < 10)
 		change_enemy_direction(enemy);
-	if (enemy->orient == 'U') next_y--;
-	else if (enemy->orient == 'D') next_y++;
-	else if (enemy->orient == 'L') next_x--;
-	else if (enemy->orient == 'R') next_x++;
-
-	if (game->map.map[next_x][next_y] != '1' && game->map.map[next_x][next_y] != 'c' && game->map.map[next_x][next_y] != 'e') {
-		while (i < game->map.enemies_count) {
-			if (game->enemies[i].x == next_x && game->enemies[i].y == next_y) {
+	move(enemy, &next_x, &next_y);
+	if (game->map.map[next_x][next_y] != '1' && game->map.map[next_x][next_y]
+		!= 'c' && game->map.map[next_x][next_y] != 'e')
+	{
+		while (i < game->map.enemies_count)
+		{
+			if (game->enemies[i].x == next_x && game->enemies[i].y == next_y)
+			{
 				occupied = 1;
-				break;
+				break ;
 			}
 			i++;
 		}
-		if (!occupied) {
-			if (game->map.map[enemy->x][enemy->y] == 'o') put_texture(enemy->y, enemy->x, game, 'o');
+		if (!occupied)
+		{
+			if (game->map.map[enemy->x][enemy->y] == 'o')
+				put_texture(enemy->y, enemy->x, game, 'o');
 			enemy->x = next_x;
 			enemy->y = next_y;
 			put_texture(enemy->y, enemy->x, game, 'z');
-			if (kill(game, enemy)) {
-				ft_on_exit(game);
-				return ;
-			}
-		} else {
-			change_enemy_direction(enemy);
+			if (kill(game, enemy))
+				return (ft_on_exit(game));
 		}
-	} else {
-		change_enemy_direction(enemy);
+		else
+			change_enemy_direction(enemy);
 	}
+	else
+		change_enemy_direction(enemy);
 }
 
 void	animate_enemies(t_game *game)
@@ -105,8 +123,5 @@ void	animate_enemies(t_game *game)
 
 	i = 0;
 	while (i < game->map.enemies_count)
-	{
-		move_enemy(game, &game->enemies[i]);
-		i++;
-	}
+		move_enemy(game, &game->enemies[i++]);
 }

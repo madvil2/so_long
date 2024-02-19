@@ -12,7 +12,7 @@
 
 #include "../includes/so_long.h"
 
-int	ft_on_exit(t_game *game)
+void	ft_on_exit(t_game *game)
 {
 	if (game->window)
 		mlx_destroy_window(game->mlx, game->window);
@@ -42,7 +42,7 @@ int	main(int ac, char **av)
 		render_map(&game);
 		mlx_mouse_hook(game.window, mouse_hook, &game);
 		mlx_key_hook(game.window, key_hook, &game);
-		mlx_hook(game.window, 17, 1L << 2, ft_on_exit, &game);
+		mlx_hook(game.window, 17, 1L << 2, (int (*)())ft_on_exit, &game);
 		mlx_loop(game.mlx);
 	}
 	return (0);

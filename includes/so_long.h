@@ -76,7 +76,7 @@ typedef struct s_game {
 }	t_game;
 
 // main.c
-int		ft_on_exit(t_game *game);
+void	ft_on_exit(t_game *game);
 
 // utils.c
 int		init_textures(t_game *game);
