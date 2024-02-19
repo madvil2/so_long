@@ -6,11 +6,26 @@
 /*   By: kokaimov <kokaimov@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 19:03:52 by kokaimov          #+#    #+#             */
-/*   Updated: 2024/02/15 19:07:58 by kokaimov         ###   ########.fr       */
+/*   Updated: 2024/02/18 17:03:28 by kokaimov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
+
+void	animation(t_game *game)
+{
+	int	i;
+
+	i = 0;
+	game->player.animation = !game->player.animation;
+	while (i < game->map.coins)
+	{
+		if (game->map.pos[i].taken == 0)
+			put_texture(game->map.pos[i].y, game->map.pos[i].x, game, 'c');
+		i++;
+	}
+	animate_enemies(game);
+}
 
 void	put_texture(int x, int y, t_game *game, char type)
 {
@@ -18,8 +33,14 @@ void	put_texture(int x, int y, t_game *game, char type)
 		mlx_put_image_to_window(game->mlx, game->window,
 			game->textures.floor, 32 * x, 32 * y);
 	if (type == 'c')
-		mlx_put_image_to_window(game->mlx, game->window,
-			game->textures.collectibles1, 32 * x, 32 * y);
+	{
+		if (game->player.animation == 1)
+			mlx_put_image_to_window(game->mlx, game->window,
+									game->textures.collectibles2, 32 * x, 32 * y);
+		else
+			mlx_put_image_to_window(game->mlx, game->window,
+								game->textures.collectibles1, 32 * x, 32 * y);
+	}
 	if (type == 'e')
 		mlx_put_image_to_window(game->mlx, game->window,
 			game->textures.exit, 32 * x, 32 * y);
@@ -29,6 +50,9 @@ void	put_texture(int x, int y, t_game *game, char type)
 	if (type == 'p' && game->player.orient == 'R')
 		mlx_put_image_to_window(game->mlx, game->window,
 			game->textures.right, 32 * x, 32 * y);
+	if (type == 'z')
+		mlx_put_image_to_window(game->mlx, game->window,
+								game->textures.enemy, 32 * x, 32 * y);
 }
 
 void	render_map(t_game *game)
@@ -43,8 +67,16 @@ void	render_map(t_game *game)
 		while (++x < game->map.width)
 		{
 			if (game->map.map[y][x] == '1')
-				mlx_put_image_to_window(game->mlx, game->window,
-					game->textures.walls, 32 * x, 32 * y);
+			{
+				if (x == game->map.width - 4 && y == game->map.height - 1)
+				{
+					mlx_put_image_to_window(game->mlx, game->window, game->textures.btn, 32 * x, 32 * y);
+					x++;
+				}
+				else
+					mlx_put_image_to_window(game->mlx, game->window,
+										game->textures.walls, 32 * x, 32 * y);
+			}
 			else
 			{
 				put_texture(x, y, game, 'o');

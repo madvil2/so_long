@@ -17,7 +17,11 @@ FILES :=			main\
 					hooks\
 					parse\
 					validate\
-					game
+					game\
+					flood_fill\
+					enemies_move\
+					enemies_spawn\
+					player
 LIB :=				$(LIB_PATH)libft.a
 MLX :=				$(MLX_PATH)libmlx_Linux.a
 

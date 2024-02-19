@@ -6,7 +6,7 @@
 /*   By: kokaimov <kokaimov@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 19:17:41 by kokaimov          #+#    #+#             */
-/*   Updated: 2024/02/16 23:02:59 by kokaimov         ###   ########.fr       */
+/*   Updated: 2024/02/17 03:04:51 by kokaimov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ int	validate_contents(int *flags, t_game *game, int i, int j)
 		}
 		game->map.height = ++i;
 	}
+	game->map.pos = (t_pos *)malloc((flags[1]) * sizeof(t_pos));
 	return (1);
 }
 
@@ -106,7 +107,7 @@ int	validate_map(t_game *game)
 		free_map(game->map.map);
 		return (0);
 	}
-	if (!flood_fill_check(game, &flags[0]) || game->map.coins != flags[2])
+	if (!flood_fill_check(game, &flags[0]) || game->map.coins != flags[1])
 		return (print_error(8), free_map(game->map.map), 0);
 	return (1);
 }

@@ -45,7 +45,13 @@ int	init_textures(t_game *game)
 
 	sprintf(path, "%sexit.xpm", TEXTURES_PATH);
 	game->textures.exit = mlx_xpm_file_to_image(game->mlx, path, &a, &a);
-	if (!game->textures.walls || !game->textures.floor || !game->textures.right || !game->textures.left || !game->textures.collectibles1 || !game->textures.collectibles2 || !game->textures.exit)
+
+	sprintf(path, "%sbutton.xpm", TEXTURES_PATH);
+	game->textures.btn = mlx_xpm_file_to_image(game->mlx, path, &a, &a);
+
+	sprintf(path, "%senemy.xpm", TEXTURES_PATH);
+	game->textures.enemy = mlx_xpm_file_to_image(game->mlx, path, &a, &a);
+	if (!game->textures.walls || !game->textures.floor || !game->textures.right || !game->textures.left || !game->textures.collectibles1 || !game->textures.collectibles2 || !game->textures.exit || !game->textures.btn || !game->textures.enemy)
 		return (0);
 	return (1);
 }
@@ -63,9 +69,14 @@ void	init(t_game *game)
 	game->textures.collectibles1 = NULL;
 	game->textures.collectibles2 = NULL;
 	game->textures.exit = NULL;
+	game->textures.btn = NULL;
+	game->textures.enemy = NULL;
 	game->player.orient = 'R';
 	game->player.score = 0;
 	game->map.exit = 0;
+	game->map.enemies_count = 0;
+	game->player.animation = 0;
+	game->pressed = 0;
 }
 
 void	free_map(char **map)

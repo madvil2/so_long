@@ -29,6 +29,7 @@ int	main(int ac, char **av)
 
 	if (ac == 2)
 	{
+		srand(time(NULL));
 		init(&game);
 		if (!validate_input(av[1], &game))
 			return (0);
@@ -39,6 +40,7 @@ int	main(int ac, char **av)
 		if (!game.mlx || !game.window || !init_textures(&game))
 			return (0);
 		render_map(&game);
+		mlx_mouse_hook(game.window, mouse_hook, &game);
 		mlx_key_hook(game.window, key_hook, &game);
 		mlx_hook(game.window, 17, 1L << 2, ft_on_exit, &game);
 		mlx_loop(game.mlx);
