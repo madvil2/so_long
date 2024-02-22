@@ -26,9 +26,9 @@ void	flood_fill(int x, int y, t_game *game, int *has_exit)
 	if (game->map.map[x][y] == 'C')
 	{
 		game->map.map[x][y] = 'c';
-		game->map.pos[game->map.coins].x = x;
-		game->map.pos[game->map.coins].y = y;
-		game->map.pos[game->map.coins].taken = 0;
+		game->map.coins_pos[game->map.coins].x = x;
+		game->map.coins_pos[game->map.coins].y = y;
+		game->map.coins_pos[game->map.coins].taken = 0;
 		game->map.coins++;
 	}
 	if (game->map.map[x][y] == '0')

@@ -18,9 +18,10 @@ static int	is_map_rectangular(char **map)
 	size_t	i;
 	size_t	len;
 
+	if (!map[0])
+		return (print_error(10), 0);
 	first_line_row = ft_strlen(map[0]);
 	i = 1;
-	len = 0;
 	while (map[i])
 	{
 		len = ft_strlen(map[i]);
@@ -76,13 +77,15 @@ int	validate_contents(int *flags, t_game *game, int i, int j)
 				game->player.x = j;
 				(flags[2])++;
 			}
-			else if (!(game->map.map[i][j] == '0' || game->map.map[i][j] == '1'))
+			else if (!(game->map.map[i][j] == '0'
+				|| game->map.map[i][j] == '1'))
 				return (print_error(3), 0);
 			game->map.width = ++j;
 		}
 		game->map.height = ++i;
 	}
-	game->map.pos = (t_pos *)malloc((flags[1]) * sizeof(t_pos));
+	game->map.coins_pos = (t_coins_pos *)malloc((flags[1])
+			* sizeof(t_coins_pos));
 	return (1);
 }
 
@@ -93,7 +96,8 @@ int	validate_map(t_game *game)
 	flags[0] = 0;
 	flags[1] = 0;
 	flags[2] = 0;
-	if (!is_map_rectangular(game->map.map) || !is_surrounded_by_walls(game->map.map))
+	if (!is_map_rectangular(game->map.map)
+		|| !is_surrounded_by_walls(game->map.map))
 		return (free_map(game->map.map), 0);
 	if (!validate_contents(flags, game, 0, 0)
 		|| flags[0] != 1 || flags[1] < 1 || flags[2] != 1)
@@ -108,6 +112,7 @@ int	validate_map(t_game *game)
 		return (0);
 	}
 	if (!flood_fill_check(game, &flags[0]) || game->map.coins != flags[1])
-		return (print_error(8), free_map(game->map.map), 0);
+		return (print_error(8), free_map(game->map.map),
+			free_coins_pos(game), 0);
 	return (1);
 }

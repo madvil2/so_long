@@ -16,11 +16,7 @@
 # include <fcntl.h>
 # include "../libft/libft.h"
 # include <mlx.h>
-
-// to delete after
 # include <time.h>
-# include <stdio.h>
-//
 
 typedef struct s_textures
 {
@@ -43,11 +39,11 @@ typedef struct s_player {
 	int		animation;
 }	t_player;
 
-typedef struct s_pos {
+typedef struct s_coins_pos {
 	int	x;
 	int	y;
 	int	taken;
-}	t_pos;
+}	t_coins_pos;
 
 typedef struct s_bot {
 	int		x;
@@ -56,13 +52,13 @@ typedef struct s_bot {
 }	t_bot;
 
 typedef struct s_map {
-	char	**map;
-	int		height;
-	int		width;
-	int		coins;
-	int		enemies_count;
-	t_pos	*pos;
-	int		exit;
+	char		**map;
+	int			height;
+	int			width;
+	int			coins;
+	int			enemies_count;
+	t_coins_pos	*coins_pos;
+	int			exit;
 }	t_map;
 
 typedef struct s_game {
@@ -76,10 +72,13 @@ typedef struct s_game {
 }	t_game;
 
 // main.c
+void	free_enemies(t_game *game);
+void	free_coins_pos(t_game *game);
+void	free_mlx(t_game *game);
 void	ft_on_exit(t_game *game);
 
 // utils.c
-int		init_textures(t_game *game);
+int		init_textures(t_game *game, int a);
 void	init(t_game *game);
 void	free_map(char **map);
 void	print_error(int type);
@@ -98,10 +97,10 @@ int		validate_input(char *file, t_game *game);
 int		validate_map(t_game *game);
 
 // game.c
+void	game_over_screen(t_game *game);
 void	animation(t_game *game);
 void	put_texture(int x, int y, t_game *game, char type);
-void	render_map(t_game *game);
-
+void	render_map(t_game *game, int x, int y);
 
 // flood_fill.c
 void	flood_fill(int x, int y, t_game *game, int *has_exit);
@@ -115,13 +114,17 @@ void	move_left(t_game *game);
 void	move_right(t_game *game);
 
 // enemies_move.c
-void	change_enemy_direction(t_bot *enemy);
-int		kill(t_game *game, t_bot *enemy);
-void	move_enemy(t_game *game, t_bot *enemy);
-void	animate_enemies(t_game *game);
+void	enemy_change_direction(t_bot *enemy);
+int		enemy_kill(t_game *game, t_bot *enemy);
+void	predict_step(t_bot *enemy, int *next_y, int *next_x);
+int		check_for_enemy(t_game *game, int *next_x, int *next_y);
+void	enemy_move(t_game *game, t_bot *enemy, int *next_x, int *next_y);
 
-// enemies_spawn.c
-int	calculate_enemies(int width, int height);
-void	spawn_enemy(t_game *game, int x, int y);
+// enemies_logic.c
+void	enemy_logic(t_game *game, t_bot *enemy);
+void	enemy_animate(t_game *game);
+int		calculate_enemies(int width, int height);
+void	enemies_init(t_game *game);
+void	game_over_screen(t_game *game);
 
 #endif

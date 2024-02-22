@@ -67,7 +67,7 @@ int	validate_input(char *file, t_game *game)
 		return (print_error(7), 0);
 	game->map.map = parse_map(file);
 	if (!game->map.map)
-		return (0);
+		return (print_error(9), 0);
 	if (validate_map(game))
 		return (1);
 	return (0);

@@ -12,6 +12,19 @@
 
 #include "../includes/so_long.h"
 
+void	game_over_screen(t_game *game)
+{
+	char	*over_str;
+
+	ft_printf("Game over!\n");
+	over_str = ft_strdup("Game over!");
+	if (!over_str)
+		return (game->map.exit = 1, print_error(9));
+	mlx_string_put(game->mlx, game->window, 32 * ((game->map.width - 1) / 2),
+		20, 0x00FFFFFF, over_str);
+	free(over_str);
+}
+
 void	animation(t_game *game)
 {
 	int	i;
@@ -20,11 +33,12 @@ void	animation(t_game *game)
 	game->player.animation = !game->player.animation;
 	while (i < game->map.coins)
 	{
-		if (game->map.pos[i].taken == 0)
-			put_texture(game->map.pos[i].y, game->map.pos[i].x, game, 'c');
+		if (game->map.coins_pos[i].taken == 0)
+			put_texture(game->map.coins_pos[i].y,
+				game->map.coins_pos[i].x, game, 'c');
 		i++;
 	}
-	animate_enemies(game);
+	enemy_animate(game);
 }
 
 void	put_texture(int x, int y, t_game *game, char type)
@@ -36,10 +50,10 @@ void	put_texture(int x, int y, t_game *game, char type)
 	{
 		if (game->player.animation == 1)
 			mlx_put_image_to_window(game->mlx, game->window,
-									game->textures.collectibles2, 32 * x, 32 * y);
+				game->textures.collectibles2, 32 * x, 32 * y);
 		else
 			mlx_put_image_to_window(game->mlx, game->window,
-								game->textures.collectibles1, 32 * x, 32 * y);
+				game->textures.collectibles1, 32 * x, 32 * y);
 	}
 	if (type == 'e')
 		mlx_put_image_to_window(game->mlx, game->window,
@@ -52,15 +66,11 @@ void	put_texture(int x, int y, t_game *game, char type)
 			game->textures.right, 32 * x, 32 * y);
 	if (type == 'z')
 		mlx_put_image_to_window(game->mlx, game->window,
-								game->textures.enemy, 32 * x, 32 * y);
+			game->textures.enemy, 32 * x, 32 * y);
 }
 
-void	render_map(t_game *game)
+void	render_map(t_game *game, int x, int y)
 {
-	int	x;
-	int	y;
-
-	y = -1;
 	while (++y < game->map.height)
 	{
 		x = -1;
@@ -69,13 +79,11 @@ void	render_map(t_game *game)
 			if (game->map.map[y][x] == '1')
 			{
 				if (x == game->map.width - 4 && y == game->map.height - 1)
-				{
-					mlx_put_image_to_window(game->mlx, game->window, game->textures.btn, 32 * x, 32 * y);
-					x++;
-				}
+					mlx_put_image_to_window(game->mlx, game->window,
+						game->textures.btn, 32 * x++, 32 * y);
 				else
 					mlx_put_image_to_window(game->mlx, game->window,
-										game->textures.walls, 32 * x, 32 * y);
+						game->textures.walls, 32 * x, 32 * y);
 			}
 			else
 			{

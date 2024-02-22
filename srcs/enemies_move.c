@@ -6,13 +6,13 @@
 /*   By: kokaimov <kokaimov@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/19 00:53:46 by kokaimov          #+#    #+#             */
-/*   Updated: 2024/02/19 01:02:32 by kokaimov         ###   ########.fr       */
+/*   Updated: 2024/02/21 19:42:27 by kokaimov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/so_long.h"
 
-void	change_enemy_direction(t_bot *enemy)
+void	enemy_change_direction(t_bot *enemy)
 {
 	if (rand() % 4 == 0)
 	{
@@ -38,7 +38,7 @@ void	change_enemy_direction(t_bot *enemy)
 	}
 }
 
-int	kill(t_game *game, t_bot *enemy)
+int	enemy_kill(t_game *game, t_bot *enemy)
 {
 	int	dx;
 	int	dy;
@@ -62,66 +62,39 @@ int	kill(t_game *game, t_bot *enemy)
 	return (0);
 }
 
-void	move(t_bot *enemy, int *next_y, int *next_x)
+void	predict_step(t_bot *enemy, int *next_y, int *next_x)
 {
 	if (enemy->orient == 'U')
-		next_y--;
+		(*next_y)--;
 	else if (enemy->orient == 'D')
-		next_y++;
+		(*next_y)++;
 	else if (enemy->orient == 'L')
-		next_x--;
+		(*next_x)--;
 	else if (enemy->orient == 'R')
-		next_x++;
+		(*next_x)++;
 }
 
-void	move_enemy(t_game *game, t_bot *enemy)
-{
-	int	next_x;
-	int	next_y;
-	int	occupied;
-	int	i;
-
-	next_x = enemy->x;
-	next_y = enemy->y;
-	occupied = 0;
-	i = 0;
-	if (rand() % 100 < 10)
-		change_enemy_direction(enemy);
-	move(enemy, &next_x, &next_y);
-	if (game->map.map[next_x][next_y] != '1' && game->map.map[next_x][next_y]
-		!= 'c' && game->map.map[next_x][next_y] != 'e')
-	{
-		while (i < game->map.enemies_count)
-		{
-			if (game->enemies[i].x == next_x && game->enemies[i].y == next_y)
-			{
-				occupied = 1;
-				break ;
-			}
-			i++;
-		}
-		if (!occupied)
-		{
-			if (game->map.map[enemy->x][enemy->y] == 'o')
-				put_texture(enemy->y, enemy->x, game, 'o');
-			enemy->x = next_x;
-			enemy->y = next_y;
-			put_texture(enemy->y, enemy->x, game, 'z');
-			if (kill(game, enemy))
-				return (ft_on_exit(game));
-		}
-		else
-			change_enemy_direction(enemy);
-	}
-	else
-		change_enemy_direction(enemy);
-}
-
-void	animate_enemies(t_game *game)
+int	check_for_enemy(t_game *game, int *next_x, int *next_y)
 {
 	int	i;
 
 	i = 0;
 	while (i < game->map.enemies_count)
-		move_enemy(game, &game->enemies[i++]);
+	{
+		if (game->enemies[i].x == *next_x && game->enemies[i].y == *next_y)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+void	enemy_move(t_game *game, t_bot *enemy, int *next_x, int *next_y)
+{
+	if (game->map.map[enemy->x][enemy->y] == 'o')
+		put_texture(enemy->y, enemy->x, game, 'o');
+	enemy->x = *next_x;
+	enemy->y = *next_y;
+	put_texture(enemy->y, enemy->x, game, 'z');
+	if (enemy_kill(game, enemy))
+		return (game->map.exit = 1, game_over_screen(game));
 }

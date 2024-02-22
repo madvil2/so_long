@@ -20,7 +20,7 @@ FILES :=			main\
 					game\
 					flood_fill\
 					enemies_move\
-					enemies_spawn\
+					enemies_logic\
 					player
 LIB :=				$(LIB_PATH)libft.a
 MLX :=				$(MLX_PATH)libmlx_Linux.a
